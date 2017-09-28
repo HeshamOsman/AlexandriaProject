@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>Syporian</artifactId>
-    <groupId>com.syporn</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+        <artifactId>Syporian</artifactId>
+        <groupId>com.syporn</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <groupId>com.syporn</groupId>
     <artifactId>Syporian-ejb</artifactId>
@@ -17,19 +17,121 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     
+        <flyway.version>4.2.0</flyway.version>
+        <mariadb.version>1.4.4</mariadb.version>
+        <database.driver>org.mariadb.jdbc.Driver</database.driver>
+        <database.url>jdbc:mysql://localhost:3306/SypronInternal?zeroDateTimeBehavior=convertToNull</database.url>
+        <database.username>root</database.username>
+        <database.password>123456</database.password>
+  
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.2</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+<dependency>
+    <groupId>org.mariadb.jdbc</groupId>
+    <artifactId>mariadb-java-client</artifactId>
+    <version>${mariadb.version}</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+<dependency>
+    <groupId>org.liquibase</groupId>
+    <artifactId>liquibase-core</artifactId>
+    <version>3.5.3</version>
+</dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+<!--        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>-->
+        <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.25</version>
+</dependency>
+
     </dependencies>
 
     <build>
         <plugins>
+<!--              <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <driver>${database.driver}</driver>
+                    <url>${database.url}</url>
+                    <user>${database.username}</user>
+                    <password>${database.password}</password>
+                    <schemas>
+                        <schema>SypronInternal</schema>
+                    </schemas>
+                    <locations>
+                        <location>db/migration</location>
+                    </locations>
+                    <encoding>ISO-8859-1</encoding>
+                    <cleanOnValidationError>true</cleanOnValidationError>
+                    <placeholders>
+                        <email_type.primary>Primary</email_type.primary>
+                        <email_type.work>Work</email_type.work>
+                        <phone_type.home>Home</phone_type.home>
+                    </placeholders>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flyway database migration</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>baseline</goal>
+                            <goal>migrate</goal>
+                            <goal>info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+<!--            <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.5.3</version>
+        <configuration>
+          <propertyFile>liquibase/liquibase.properties</propertyFile>
+          <changeLogFile>liquibase/changelog-master.xml</changeLogFile>
+           <driver>${database.driver}</driver>
+                    <url>${database.url}</url>
+                    <defaultSchemaName></defaultSchemaName>
+                    <username>${database.username}</username>
+                    <password>${database.password}</password>
+        </configuration>
+        <executions>
+	    <execution>
+	        <goals>
+		    <goal>update</goal>
+		</goals>
+	    </execution>
+	</executions>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 24, 2017, 8:09:54 PM
+    Author     : hisham
+*/
+
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}
+
+.yellow{
+                background:rgb(169,145,32);
+
+            }
+
+.button{
+    height:30px;
+    background:#205a7b;
+    font-size:12px;
+    color:#fff;
+    padding:0 10px;
+    min-width:100px;
+    cursor:pointer;
+    text-transform:capitalize;
+    text-align:center;
+    line-height:30px;
+    border:none !important;
+    margin-right:20px;
+    margin-top:20px;
+    box-shadow:0 2px 10px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow:0 2px 10px 0 rgba(0,0,0,0.5);
+    -webkit-box-shadow:0 2px 10px 0 rgba(0,0,0,0.5);
+    -o-box-shadow:0 2px 10px 0 rgba(0,0,0,0.5);
+    -ms-box-shadow:0 2px 10px 0 rgba(0,0,0,0.5);
+    transition:all 0.2s;
+    -webkit-transition:all 0.2s;
+    -moz-transition:all 0.2s;
+    -o-transition:all 0.2s;
+    -ms-transition:all 0.2s;
+}
+
+.button:hover{
+    background:#90EE90;
+    color:#333;
+    box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
+    -moz-box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
+    -webkit-box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
+    -o-box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
+    -ms-box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
+}
+
+
+.login-container{
+margin: auto;
+    width: 50%;
+    border: 3px solid;
+    padding: 10px;
+    
+}
+
+.login-logo{
+    margin:0 auto 30px auto;
+    display:block;
+}

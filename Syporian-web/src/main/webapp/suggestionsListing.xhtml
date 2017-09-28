@@ -1,0 +1,58 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <f:view>
+            <f:metadata>
+                <f:viewParam id="user_id" name="scope" value="#{suggestionListingBackingBean.scope}"
+                             required="true" requiredMessage="Please use a link from within the system"/>
+            </f:metadata>
+           
+            <p:dataTable id="allSuggestions" value="#{suggestionListingBackingBean.suggestions}" var="oneInstance" selection="#{suggestionListingBackingBean.selectedSuggestion}" 
+                         rowKey="#{oneInstance.id}" selectionMode="single"
+                         sortBy="#{oneInstance.createDate}"
+                         paginator="true" rows="10"  
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="5,10,15"
+                         rowStyleClass="#{oneInstance.status.name=='new' ? 'yellow': null}"
+                  >
+                <p:ajax event="rowSelect"  listener="#{suggestionListingBackingBean.onRowSelected}"/>
+
+                <p:column id="subject" filterBy="#{oneInstance.subject}" filterMatchMode="contains" sortBy="#{oneInstance.subject}" >  
+
+                    <p:outputLabel  value="#{oneInstance.subject}"  /> 
+
+
+                </p:column> 
+                <p:column id="anonymous"   >  
+
+                     <p:outputLabel  value="#{(oneInstance.anonymous)?'anonymous':oneInstance.user.email}" />
+
+
+                </p:column> 
+
+                <p:column id="date"  sortBy="#{oneInstance.createDate}" >  
+
+                    <p:outputLabel  value="#{oneInstance.createDate}"  /> 
+
+
+                </p:column> 
+                
+                <p:column id="status" filterBy="#{oneInstance.status.name}" filterMatchMode="contains" sortBy="#{oneInstance.status.name}" >  
+
+                    <p:outputLabel  value="#{oneInstance.status.name}"  /> 
+
+
+                </p:column> 
+
+
+
+            </p:dataTable>
+
+        </f:view>
+    </ui:define>
+</ui:composition>
+

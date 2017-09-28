@@ -1,0 +1,73 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <f:view>
+            
+            <f:metadata>
+                <f:viewParam id="user_id" name="userId" value="#{viewUserBackingBean.userIdParam}"
+                             required="true" requiredMessage="Please use a link from within the system"/>
+            </f:metadata>
+           
+            <h:form >
+                <p:messages id="msgs" closable="true"/>
+                <p:panelGrid columns="2" class="login-container">
+                    <p:outputLabel  value="First Name"  /> 
+                    <p:inputText disabled="true"  value="#{viewUserBackingBean.currentUser.firstName}"  />
+                    <p:outputLabel value="Last Name"/>
+                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.lastName}"/>
+                    <p:outputLabel value="Email"/>
+                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.email}"/>
+                    <p:outputLabel value="Department"/>
+                    <p:selectOneMenu id="department" disabled="true" value="#{viewUserBackingBean.userDepartmentName}"
+                                     required="true" requiredMessage="Department is required" >
+                        <p:ajax listener="#{viewUserBackingBean.onChangeDepartment()}" update="role" />
+                        <f:selectItem itemLabel="Select Department" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{viewUserBackingBean.departments}" var="selected" itemLabel="#{selected.name}" itemValue="#{selected.name}"  >
+
+                        </f:selectItems>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Role"/>
+
+                    <p:selectOneMenu  id="role" disabled="true" value="#{viewUserBackingBean.userRoleName}"
+                                    required="true" requiredMessage="Role is required" >
+                        <p:ajax />
+                        <f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{viewUserBackingBean.departmentRoles}" var="oneRole" itemLabel="#{oneRole.name}" itemValue="#{oneRole.name}"  >
+
+                        </f:selectItems>
+                    </p:selectOneMenu>    
+
+                    <p:outputLabel value="Join Date"/>
+                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.createDate}"/>
+                    <p:outputLabel value="Tel"/>
+                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.tel}"/>
+
+                    <p:outputLabel value="Active"/>
+                    <p:selectOneMenu  id="active" disabled="true" value="#{viewUserBackingBean.currentUser.active}"
+                                     >
+                        <p:ajax />
+                        <f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Active" itemValue="true" />
+                        <f:selectItem itemLabel="Not Active" itemValue="false"/>
+           
+                    </p:selectOneMenu> 
+
+
+
+
+
+
+                </p:panelGrid>
+
+
+
+            </h:form>  
+
+        </f:view>
+    </ui:define>
+</ui:composition>

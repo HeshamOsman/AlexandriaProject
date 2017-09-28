@@ -1,0 +1,60 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <f:view>
+
+            <h:form>
+                <p:messages id="msgs" />
+                <p:panel>
+                    <p:panelGrid columns="2" class="login-container">
+
+                        <p:outputLabel value="Email *" />
+
+                        <p:inputText id="userEmail" value="#{addUserBackingBean.user.email}"
+                                     required="true" requiredMessage="Email is required"></p:inputText>
+
+                        <p:outputLabel value="First Name *" />
+                        <p:inputText id="firstName" value="#{addUserBackingBean.user.firstName}"
+                                     required="true" requiredMessage="First Name is required"></p:inputText>
+
+                        <p:outputLabel value="Last Name *" />
+                        <p:inputText id="lastName" value="#{addUserBackingBean.user.lastName}"
+                                     required="true" requiredMessage="Last Name is required"></p:inputText>
+
+                        <p:outputLabel value="Password *" />
+                        <p:password id="password" value="#{addUserBackingBean.password}" match="repassword"
+                                    required="true" requiredMessage="Password is required" ></p:password>
+                        <p:outputLabel value="Retype Password *" />
+                        <p:password id="repassword" value="#{addUserBackingBean.retypedPassword}"
+                                    required="true" requiredMessage="Password is required" ></p:password>
+                        <p:outputLabel value="Department *" />
+                        <p:selectOneMenu id="department" value="#{addUserBackingBean.selectedDepartmentName}"
+                                         required="true" requiredMessage="Department is required" >
+                            <p:ajax listener="#{addUserBackingBean.onChangeDepartment()}" update="role" />
+                            <f:selectItem itemLabel="Select Department" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{addUserBackingBean.departments}" var="selected" itemLabel="#{selected.name}" itemValue="#{selected.name}"  >
+
+                            </f:selectItems>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Role *" />
+                        <p:selectOneMenu id="role" value="#{addUserBackingBean.selectedRoleName}"
+                                required="true" requiredMessage="Role is required"         >
+                            <p:ajax />
+                            <f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{addUserBackingBean.departmentRoles}" var="oneRole" itemLabel="#{oneRole.name}" itemValue="#{oneRole.name}"  >
+
+                            </f:selectItems>
+                        </p:selectOneMenu>    
+                    </p:panelGrid>
+                    <h:commandButton action="#{addUserBackingBean.addUser()}"
+                                     value="add"></h:commandButton>
+                </p:panel>    
+
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>

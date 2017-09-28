@@ -1,0 +1,35 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <f:view>
+
+            <h:form>
+                <p:messages id="msgs" closable="true" />
+                <p:panelGrid columns="2" class="login-container">
+                    <p:outputLabel value="Subject" />
+                    <p:inputText id="subject" value="#{suggestionBackingBean.newSuggestion.subject}"
+                                 required="true" requiredMessage="Subject is required"></p:inputText>
+
+                    <p:outputLabel value="Suggestion Definition" />
+                    <p:inputTextarea id="definition" value="#{suggestionBackingBean.newSuggestion.suggestionDefinition}"
+                                     required="true" requiredMessage="Definition is required"></p:inputTextarea>
+
+                    <p:outputLabel value="Suggestion Impact" />
+                    <p:inputTextarea id="impact" value="#{suggestionBackingBean.newSuggestion.suggestionImpact}"
+                                     ></p:inputTextarea>
+                    <p:outputLabel value="Send As Anonymous" />
+                    <p:selectBooleanCheckbox value="#{suggestionBackingBean.newSuggestion.anonymous}" />
+
+
+                </p:panelGrid>  
+                <h:commandButton action="#{suggestionBackingBean.addSuggestion()}"
+                                 class="button"     value="add"></h:commandButton>
+
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>

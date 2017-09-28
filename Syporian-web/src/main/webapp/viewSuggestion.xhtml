@@ -1,0 +1,55 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <f:view>
+            <f:metadata>
+                <f:viewParam id="suggestion_id" name="suggestionId" value="#{viewSuggestion.suggestionIdParam}"
+                             required="true" requiredMessage="Please use a link from within the system"/>
+            </f:metadata>
+
+            <p:panelGrid columns="2" class="login-container">
+                <p:outputLabel  value="Suggestion Identifier" />
+                <p:outputLabel  value="#{viewSuggestion.currentSuggestion.suggestionIdentifier}" />
+                <p:outputLabel  value="Suggestion By" />
+                <p:outputLabel  value="#{(viewSuggestion.currentSuggestion.anonymous)?'Anonymous': viewSuggestion.currentSuggestion.user.email}" />
+                <p:outputLabel  value="Subject" />
+                <p:outputLabel  value="#{viewSuggestion.currentSuggestion.subject}" />
+                <p:outputLabel  value="Suggestion Definition" />
+                <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionDefinition}" />
+                <p:outputLabel  value="Suggestion Impact" />
+                <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionImpact}" />
+
+
+            </p:panelGrid>  
+            <h:form>
+                <p:dataTable id="suggestionActions"  value="#{viewSuggestion.suggestionActions}" var="oneInstance" >
+                    <p:column id="actiondesc" filterBy="#{oneInstance.description}"  sortBy="#{oneInstance.description}" >  
+
+                        <p:outputLabel  value="#{oneInstance.description}"  /> 
+
+
+                    </p:column> 
+                    <p:column id="actiondate" filterBy="#{oneInstance.createDate}"  sortBy="#{oneInstance.createDate}" >  
+
+                        <p:outputLabel  value="#{oneInstance.createDate}"  /> 
+
+
+                    </p:column> 
+                    <p:column id="actionUser" filterBy="#{oneInstance.user.email}"  sortBy="#{oneInstance.user.email}" >  
+
+                        <p:outputLabel  value="#{oneInstance.user.email}"  /> 
+
+
+                    </p:column> 
+                </p:dataTable> 
+                <p:inputText rendered="#{viewSuggestion.renderAddAction}" value="#{viewSuggestion.newSuggestionAction.description}"/>
+              
+                <p:commandButton action="#{viewSuggestion.addAction()}" rendered="#{viewSuggestion.renderAddAction}" value="add action" update="suggestionActions"/>
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>The Contributor</title>
+        <link href="resources/styles/mainStyles.css" rel="stylesheet" type="text/css" />    
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:messages id="msgs" closable="true"  />
+            <p:panel class="login-container">
+            <p:graphicImage  value="resources/images/sypron_logo.png" class="login-container"  />
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Email *" />
+                <p:inputText id="userEmail" value="#{registrationBackingBean.user.email}"
+                             required="true" requiredMessage="Email is required"></p:inputText>
+
+                <p:outputLabel value="First Name *" />
+                <p:inputText id="firstName" value="#{registrationBackingBean.user.firstName}"
+                             required="true" requiredMessage="First Name is required"></p:inputText>
+
+                <p:outputLabel value="Last Name *" />
+                <p:inputText id="lastName" value="#{registrationBackingBean.user.lastName}"
+                             required="true" requiredMessage="Last Name is required"></p:inputText>
+
+                <p:outputLabel value="Password *" />
+                <p:password id="password" value="#{registrationBackingBean.password}" match="repassword"
+                               required="true" requiredMessage="Password is required" ></p:password>
+
+                <p:outputLabel value="Retype Password *" />
+                <p:password id="repassword" value="#{registrationBackingBean.retypedPassword}"
+                               required="true" requiredMessage="Retype Password is required" ></p:password>
+
+                <p:outputLabel value="Department *" />
+                <p:selectOneMenu id="department" value="#{registrationBackingBean.selectedDepartmentName}"
+                                 required="true" requiredMessage="Department is required"  >
+
+                    <f:selectItem itemLabel="Select Department" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{registrationBackingBean.departments}" var="selected" itemLabel="#{selected.name}" itemValue="#{selected.name}"  >
+
+                    </f:selectItems>
+                </p:selectOneMenu>
+                <h:commandButton action="#{registrationBackingBean.addUser()}"
+                                 value="Register" class="button"></h:commandButton>
+
+
+
+                <h:button outcome="loging"  
+                          value="Login" class="button"></h:button>
+
+            </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+
