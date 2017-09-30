@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>  
+        <link href="resources/styles/mainStyles.css" rel="stylesheet" type="text/css" />
+        <style>
+            .ui-menubar,.ui-menu-child,.ui-menu {
+/*    background: #004e8e !important;*/
+background: white !important;
+}
+            .ui-layout-north {
+                z-index:20 !important;
+                overflow:visible !important;
+            }
+
+            .ui-layout-north .ui-layout-unit-content {
+                overflow:visible !important;
+            }
+            </style>
+    
+    </h:head>
+    <body >
+
+
+        <p:layout  fullPage="true" >
+            <p:layoutUnit id="upUnit" position="north" closable="true"  >                                        
+                <h:form>  
+                    <p:panelGrid columns="2" style="width: 100%">
+                        <p:graphicImage  value="resources/images/sypron_logo.png"  />
+                    <p:menubar >
+                        
+                        <p:menuitem style=" float:right;" value="Home"  outcome="homePage"  />
+                        <p:menuitem style=" float:right;" value="Profile"  outcome="viewUser"  >
+                            <f:param name="userId" value="#{menuBackingBean.currentUser.id}" />
+                        </p:menuitem>
+
+
+                        <p:menuitem style=" float:right;" value="Logout" icon="ui-icon-extlink" action="#{loginBackingBean.logout()}"  />
+
+                    </p:menubar>
+                    </p:panelGrid>
+                    
+                </h:form>          
+            </p:layoutUnit>
+            <p:layoutUnit id="westUnit" position="west" size="230" closable="true" resizable="true"  >                                        
+                <h:form>  
+
+                    <p:panelMenu style="width:220px;">
+                        <p:submenu label="Complaint" rendered="#{menuBackingBean.renderComplaint}" >
+                            <p:menuitem rendered="#{menuBackingBean.renderNewComplaint}" value="New Complaint" outcome="complaintForm" />
+                            <p:menuitem rendered="#{menuBackingBean.renderListMyComplaint}" value="My Complaints" outcome="complaintsListing"  >
+                                <f:param name="scope" value="user" />
+                            </p:menuitem>
+                            <p:menuitem rendered="#{menuBackingBean.renderListDepartmentComplaint}" value="Department Complaints" outcome="complaintsListing" >
+                                <f:param name="scope" value="department" />
+                            </p:menuitem>
+                            <p:menuitem rendered="#{menuBackingBean.renderListCompanyComplaint}" value="Company Complaints" outcome="complaintsListing" >
+                                <f:param name="scope" value="company" />
+                            </p:menuitem>
+                        </p:submenu>
+
+                        <p:submenu label="Suggestion" rendered="#{menuBackingBean.renderSuggestion}" >
+                            <p:menuitem rendered="#{menuBackingBean.renderNewSuggestion}" value="New Suggestion" outcome="suggestionForm"/>
+                            <p:menuitem rendered="#{menuBackingBean.renderListMySuggestion}" value="My Suggestions" outcome="suggestionsListing" >
+                                <f:param name="scope" value="user" />
+                            </p:menuitem>
+                            <p:menuitem rendered="#{menuBackingBean.renderListDepartmentSuggestion}" value="Department Suggestions" outcome="suggestionsListing" >
+                                <f:param name="scope" value="department" />
+                            </p:menuitem>
+                            <p:menuitem rendered="#{menuBackingBean.renderListCompanySuggestion}" value="Company Suggestions" outcome="suggestionsListing" >
+                                <f:param name="scope" value="company" />
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu label="User" rendered="#{menuBackingBean.renderUser}" >
+                            <p:menuitem rendered="#{menuBackingBean.renderNewUser}" value="New User" outcome="addUser" />
+                            <p:menuitem rendered="#{menuBackingBean.renderListUsers}" value="Company Users" outcome="userListing" />
+                        </p:submenu>
+
+
+                    </p:panelMenu>
+                </h:form>          
+            </p:layoutUnit>
+            <p:layoutUnit position="center" id="inner-content">
+
+                <ui:insert name="content">Default content</ui:insert>                    
+            </p:layoutUnit>
+            <p:layoutUnit position="south" id="footer" closable="true" resizable="true" >
+                <p:panel>
+                <p:outputLabel >All rights reserved 2017,</p:outputLabel>
+                <p:link value="sypron.com" href="http://www.sypron.com/" target="_blank">
+                    
+                </p:link>  
+</p:panel>                
+            </p:layoutUnit>
+        </p:layout>               
+
+
+
+    </body>
+
+</html>
+
