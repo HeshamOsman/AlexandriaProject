@@ -10,7 +10,7 @@
                 <f:viewParam id="complaint_id" name="complaintId" value="#{viewComplaintBackingBean.complaintIdParam}"
                              required="true" requiredMessage="Please use a link from within the system"/>
             </f:metadata>
-                <h:form>
+            <h:form id="f1">
 
                     <p:panelGrid columns="2" >
                         <p:panel>
@@ -19,10 +19,10 @@
                         </p:panel>
                         <p:panel>
                             <p:outputLabel  value="Complaint Status : " />
-                            <p:selectOneMenu disabled="#{!viewComplaintBackingBean.renderAddAction}" id="status" value="#{viewComplaintBackingBean.statusString}"
+                            <p:selectOneMenu disabled="#{!viewComplaintBackingBean.statusChangeEnabled}" id="status" value="#{viewComplaintBackingBean.statusString}"
                                              required="true" requiredMessage="Status is required" >
-                                <p:ajax listener="#{viewComplaintBackingBean.onChangeStatus()}"  />
-                                
+                                <p:ajax   listener="#{viewComplaintBackingBean.onChangeStatus()}" update=":f1 :f1:addActionBtn"  />
+                               
                                 <f:selectItems value="#{viewComplaintBackingBean.statusList}" var="selected" itemLabel="#{selected.name}" itemValue="#{selected.name}"  >
 
                                 </f:selectItems>
@@ -44,15 +44,16 @@
                             <p:outputLabel  value="Requested Resolution : " />
                             <p:inputTextarea disabled="true"  value="#{viewComplaintBackingBean.currentComplaint.requestedResolution}" />
                         </p:panel>
-
+                        <h:commandButton class="button" value="ExportToPDF" title="ExportToPDF"  action="#{viewComplaintBackingBean.pDF}"/>
                     </p:panelGrid>  
 
                     <p:dataTable id="complaintActions"  value="#{viewComplaintBackingBean.complaintActions}" var="oneInstance" >
+                       
                         <p:column id="actiondesc" filterBy="#{oneInstance.description}"  sortBy="#{oneInstance.description}" >  
 
                             <p:outputLabel  value="#{oneInstance.description}"  /> 
 
-
+                        
                         </p:column> 
                         <p:column id="actiondate" filterBy="#{oneInstance.createDate}"  sortBy="#{oneInstance.createDate}" >  
 
@@ -67,11 +68,36 @@
 
                         </p:column> 
                     </p:dataTable> 
-                    <p:inputText rendered="#{viewComplaintBackingBean.renderAddAction}" value="#{viewComplaintBackingBean.newComplaintAction.description}"/>
-
-                    <p:commandButton action="#{viewComplaintBackingBean.addAction()}" rendered="#{viewComplaintBackingBean.renderAddAction}" value="add action" update="complaintActions"/>
+                    
+                   
+                <p:commandButton id="addActionBtn" class="button" disabled="#{!viewComplaintBackingBean.renderAddAction}" immediate="true"   onclick="PF('dlg').show();" value="add Action"  >
+                                    
+                </p:commandButton>
                 </h:form>
             
         </f:view>
+         <h:form id="addActionForm">
+            <p:dialog header="Add Action" widgetVar="dlg" resizable="true" closable="true" showEffect="explode" hideEffect="explode">  
+               
+                <p:panelGrid columns="1"  > 
+                     <p:outputLabel value="action Dec" />
+                     <p:inputTextarea  value="#{viewComplaintBackingBean.newComplaintAction.description}"/>
+                </p:panelGrid>  
+                <p:commandButton class="button" action="#{viewComplaintBackingBean.addAction()}"  value="add action" update=" :f1:complaintActions "/>
+            </p:dialog> 
+        </h:form>
+        <h:form id="viewActionForm">
+            <p:dialog header="View Action" widgetVar="viewDlg" resizable="true" closable="true" showEffect="explode" hideEffect="explode">  
+               
+                <p:panelGrid columns="2"  > 
+                     <p:outputLabel value="action Dec" />
+                     <p:inputTextarea  value="#{viewComplaintBackingBean.newComplaintAction.description}"/>
+                </p:panelGrid>  
+                
+            </p:dialog> 
+        </h:form>
+        
+        
+        
     </ui:define>
 </ui:composition>

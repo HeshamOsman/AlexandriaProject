@@ -6,6 +6,7 @@
 package com.sypron.facade;
 
 import com.sypron.entity.Complaint;
+import com.sypron.entity.DepartmentRole;
 import com.sypron.entity.Permission;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -54,6 +55,22 @@ public class ComplaintFacade extends AbstractFacade<Complaint> {
             return null;
         else  
             return query.getResultList();
+    }
+    
+    public List<Object[]> getComplaintsStatsByRole(Integer userId,DepartmentRole departmentRole){
+        switch(departmentRole.getRole().getName()){
+            case "manager":
+                 return em.createQuery("SELECT COUNT(c) ,  FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate)  From Complaint c Where c.user.departmentRole.department = :departmentId   GROUP BY FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate) ")
+                .setParameter("departmentId", departmentRole.getDepartment()).getResultList();
+            case "board_member":
+                return em.createQuery("SELECT COUNT(c) ,  FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate)  From Complaint c  GROUP BY FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate) ")
+                .setParameter("userId", userId).getResultList();
+             
+            default:
+               return em.createQuery("SELECT COUNT(c) ,  FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate)  From Complaint c WHERE c.user.id = :userId GROUP BY FUNC('YEAR', c.createDate) , FUNC('MONTH',c.createDate) ")
+                .setParameter("userId", userId).getResultList(); 
+        }
+        
     }
     
 }

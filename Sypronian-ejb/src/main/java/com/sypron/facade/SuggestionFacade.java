@@ -5,6 +5,7 @@
  */
 package com.sypron.facade;
 
+import com.sypron.entity.DepartmentRole;
 import com.sypron.entity.Suggestion;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -53,5 +54,20 @@ public class SuggestionFacade extends AbstractFacade<Suggestion> {
         else  
             return query.getResultList();
     }
+      
+    public List<Object[]> getSuggestionsStatsByRole(Integer userId,DepartmentRole departmentRole){
+         switch(departmentRole.getRole().getName()){
+            case "manager":
+                 return em.createQuery("SELECT COUNT(s) ,  FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate)  From Suggestion s Where s.user.departmentRole.department = :departmentId   GROUP BY FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate) ")
+                .setParameter("departmentId", departmentRole.getDepartment()).getResultList();
+            case "board_member":
+                return em.createQuery("SELECT COUNT(s) ,  FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate)  From Suggestion s  GROUP BY FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate) ")
+                .setParameter("userId", userId).getResultList();
+             
+            default:
+               return em.createQuery("SELECT COUNT(s) ,  FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate)  From Suggestion s WHERE s.user.id = :userId GROUP BY FUNC('YEAR', s.createDate) , FUNC('MONTH',s.createDate) ")
+                .setParameter("userId", userId).getResultList();
+        }
+    } 
     
 }

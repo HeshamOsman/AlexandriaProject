@@ -16,10 +16,44 @@ and open the template in the editor.
 }
 
 .yellow{
-                background:rgb(169,145,32);
+    background:rgb(169,145,32);
 
-            }
+}
 
+.registrationPanelGrid{
+ width: 100%;
+ 
+}
+
+
+.registrationPanelGrid .ui-panelgrid-cell {
+    border-style: none; 
+    background-color: #2d3b55;color: white;
+    height: 50px;
+
+}
+.registrationPanelGrid .ui-widget-content{
+    border:none;
+}
+ 
+.registrationInputfield{    
+    width: 93%;
+}
+
+.registrationSelectfield{    
+    width: 85%;
+}
+
+/*.ui-state-default, .ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default{
+
+    padding-right: 0px;
+    width: 95%;
+}*/
+body {
+    background-color: #2d3b55;
+
+}
 .button{
     height:30px;
     background:#205a7b;
@@ -56,16 +90,64 @@ and open the template in the editor.
     -ms-box-shadow:0 10px 15px 0 rgba(0,0,0,0.4);
 }
 
+.registrationForm{
+    float: right;
+}
+
+/*.logingForm{
+    float: right;
+}*/
+
+.logingPanelGrid{
+ width: 100%;
+ 
+}
+
+
+.logingPanelGrid .ui-panelgrid-cell {
+    border-style: none; 
+    background-color: #2d3b55;color: white;
+/*    height: 53px;
+    padding-bottom: 0px;
+    padding-top: 0px;*/
+
+}
+reg-logo{
+    margin-top: 10px;
+    margin-left: -23px;
+    margin: -12px;
+    width: 50%;
+
+}
+.logingPanelGrid .ui-widget-content{
+    border:none;
+}
+ 
+.logingInputfield{    
+    width: 93%;
+}
+
+
 
 .login-container{
-margin: auto;
+
     width: 50%;
-    border: 3px solid;
+    border: none;
     padding: 10px;
-    
+
 }
 
 .login-logo{
-    margin:0 auto 30px auto;
-    display:block;
+    margin: -12px;
+    width: 50%;
+}
+
+.login-pic{
+    height: 100%;
+    width: 100%;
+}
+
+.logingMainPanelGrid{
+ height: 100%;
+    width: 100%;
 }

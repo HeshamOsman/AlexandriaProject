@@ -6,7 +6,10 @@
                 xmlns:p="http://primefaces.org/ui">
       <ui:define name="content">
           <f:view>
-              <p:dataTable></p:dataTable> 
+             
+                  <p:chart type="bar" model="#{homeBackingBean.complaintSuggestionModel}" style="height:300px"/>
+    
+              
           </f:view>
       </ui:define>
 </ui:composition>

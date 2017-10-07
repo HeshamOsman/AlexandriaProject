@@ -10,32 +10,38 @@
     </h:head>
     <h:body >
         <!--        <p:messages id="messages" showDetail="true" closable="true"/>-->
-        <h:form>
+        <p:panelGrid columns="2" class="logingPanelGrid"  >
+            <p:graphicImage  value="resources/images/sypron_icon.png" class="login-logo"  />
+        <h:form class="logingForm">
             <p:messages id="msgs" closable="true" />
 
-            
-                <p:panelGrid columns="1" class="login-container" >
-                    <p:graphicImage  value="resources/images/sypron_logo.png"  />
-                    <p:outputLabel value="Email *" /> 
-                    <p:inputText id="userEmail" value="#{loginBackingBean.email}"
-                                 required="true" requiredMessage="Email is required"></p:inputText>
 
-                    <p:outputLabel value="Password *" />
+            <p:panelGrid columns="1" class="logingPanelGrid" >
+                <p:graphicImage  value="resources/images/appName.png" class="login-pic" />
+                <p:outputLabel value="Email *" /> 
+                <p:inputText id="userEmail" value="#{loginBackingBean.email}"
+                             class="logingInputfield"
+                             required="true" requiredMessage="Email is required"></p:inputText>
 
-                    <p:password id="password" value="#{loginBackingBean.password}"
-                                required="true" requiredMessage="Password is required" ></p:password>
+                <p:outputLabel value="Password *" />
+
+                <p:password id="password" value="#{loginBackingBean.password}"
+                            class="logingInputfield"
+                            required="true" requiredMessage="Password is required" ></p:password>
 
 
+
+                <p:panelGrid columns="2">
                     <h:commandButton action="#{loginBackingBean.validateUsernamePassword()}"
                                      value="Login" class="button"></h:commandButton>
 
                     <h:button class="button" outcome="registration" value="registration" ></h:button> 
-                 
                 </p:panelGrid>
-    
+            </p:panelGrid>
+
 
         </h:form>
-
+</p:panelGrid>
     </h:body>
 </html>
 

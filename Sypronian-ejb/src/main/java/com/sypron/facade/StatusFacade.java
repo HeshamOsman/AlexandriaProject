@@ -37,4 +37,7 @@ public class StatusFacade extends AbstractFacade<Status> {
              return query.getSingleResult();
     }
     
+    
+    
+    
 }
