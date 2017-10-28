@@ -11,6 +11,7 @@ import com.sypron.facade.ComplaintFacade;
 import com.sypron.facade.StatusFacade;
 import com.sypron.util.SessionUtils;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -28,9 +29,11 @@ import org.primefaces.event.SelectEvent;
  *
  * @author hisham
  */
-@ManagedBean
-@ViewScoped
-public class ComplaintListingBackingBean {
+//@ManagedBean
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+public class ComplaintListingBackingBean implements Serializable {
     
     @Inject
     private ComplaintFacade complaintFacade;

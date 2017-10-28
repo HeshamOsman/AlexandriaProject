@@ -18,6 +18,7 @@ import com.sypron.util.SessionUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,9 +57,11 @@ import org.primefaces.context.RequestContext;
  *
  * @author hisham
  */
-@ManagedBean
-@ViewScoped
-public class ViewComplaintBackingBean {
+//@ManagedBean
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+public class ViewComplaintBackingBean implements Serializable {
 
     @Inject
     private ComplaintFacade complaintFacade;
@@ -69,6 +72,7 @@ public class ViewComplaintBackingBean {
     @Inject
     private StatusFacade statusFacade;
     private List<Status> statusList;
+
     private UserDTO currentUserDTO;
     private Complaint currentComplaint;
     private Integer complaintIdParam;
@@ -84,12 +88,22 @@ public class ViewComplaintBackingBean {
     public ViewComplaintBackingBean() {
 
         newComplaintAction = new Action();
+
 //        complaintActions = new ArrayList<>();
     }
 
     @PostConstruct
     public void onInit() {
         currentUserDTO = SessionUtils.getLoggedUser();
+        
+        if (statusList == null) {
+            statusList = statusFacade.findAll();
+            if (currentUserDTO.getPermissionsMap().get("complaint", "list", "company") != null
+                    || currentUserDTO.getPermissionsMap().get("complaint", "list", "department") != null) {
+                statusList.remove(statusFacade.getStatusByName("new"));
+            }
+
+        }
     }
 
     public Complaint getCurrentComplaint() {
@@ -199,17 +213,9 @@ public class ViewComplaintBackingBean {
         this.statusChangeEnabled = statusChangeEnabled;
     }
     
-    
 
     public List<Status> getStatusList() {
-        if(statusList == null){
-            statusList =statusFacade.findAll();
-            if(currentUserDTO.getPermissionsMap().get("complaint", "list", "company") != null||
-                    currentUserDTO.getPermissionsMap().get("complaint", "list", "department") != null){
-                            statusList.remove(statusFacade.getStatusByName("new") );
-            }
-
-        }
+      
         return statusList;
     }
 
@@ -219,8 +225,10 @@ public class ViewComplaintBackingBean {
 
     public String getStatusString() {
         if(statusString == null){
-            statusString = getCurrentComplaint().getStatus().getName();
+                statusString = getCurrentComplaint().getStatus().getName();
         }
+    
+
         return statusString;
     }
 

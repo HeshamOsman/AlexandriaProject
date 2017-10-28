@@ -5,12 +5,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <f:view>
+  
+           
+        <f:view >
+             <h:form id="sr">
+             <p:messages id="msgs" closable="true" />
             <f:metadata>
                 <f:viewParam id="complaint_id" name="complaintId" value="#{viewComplaintBackingBean.complaintIdParam}"
-                             required="true" requiredMessage="Please use a link from within the system"/>
+                             />
             </f:metadata>
-            <h:form id="f1">
 
                     <p:panelGrid columns="2" >
                         <p:panel>
@@ -19,14 +22,16 @@
                         </p:panel>
                         <p:panel>
                             <p:outputLabel  value="Complaint Status : " />
+                           
                             <p:selectOneMenu disabled="#{!viewComplaintBackingBean.statusChangeEnabled}" id="status" value="#{viewComplaintBackingBean.statusString}"
-                                             required="true" requiredMessage="Status is required" >
-                                <p:ajax   listener="#{viewComplaintBackingBean.onChangeStatus()}" update=":f1 :f1:addActionBtn"  />
+                                              >
+                                <p:ajax   listener="#{viewComplaintBackingBean.onChangeStatus()}" update="addActionBtn"  />
                                
-                                <f:selectItems value="#{viewComplaintBackingBean.statusList}" var="selected" itemLabel="#{selected.name}" itemValue="#{selected.name}"  >
+                                <f:selectItems value="#{viewComplaintBackingBean.statusList}" var="selected1" itemLabel="#{selected1.name}" itemValue="#{selected1.name}"  >
 
                                 </f:selectItems>
                             </p:selectOneMenu>
+                           
                         </p:panel>
                         <p:panel>
                             <p:outputLabel  value="Complaint By : " />
@@ -73,9 +78,9 @@
                 <p:commandButton id="addActionBtn" class="button" disabled="#{!viewComplaintBackingBean.renderAddAction}" immediate="true"   onclick="PF('dlg').show();" value="add Action"  >
                                     
                 </p:commandButton>
-                </h:form>
             
-        </f:view>
+             </h:form>
+    
          <h:form id="addActionForm">
             <p:dialog header="Add Action" widgetVar="dlg" resizable="true" closable="true" showEffect="explode" hideEffect="explode">  
                
@@ -83,7 +88,7 @@
                      <p:outputLabel value="action Dec" />
                      <p:inputTextarea  value="#{viewComplaintBackingBean.newComplaintAction.description}"/>
                 </p:panelGrid>  
-                <p:commandButton class="button" action="#{viewComplaintBackingBean.addAction()}"  value="add action" update=" :f1:complaintActions "/>
+                <p:commandButton id="saveAction" class="button" action="#{viewComplaintBackingBean.addAction()}"  value="add action" update="sr:complaintActions "/>
             </p:dialog> 
         </h:form>
         <h:form id="viewActionForm">
@@ -96,7 +101,7 @@
                 
             </p:dialog> 
         </h:form>
-        
+        </f:view>
         
         
     </ui:define>

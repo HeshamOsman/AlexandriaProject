@@ -31,8 +31,10 @@ import org.primefaces.model.chart.ChartSeries;
  *
  * @author hisham
  */
-@ManagedBean()
-@ViewScoped
+//@ManagedBean()
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class HomeBackingBean implements Serializable {
 
     /**
@@ -83,16 +85,21 @@ public class HomeBackingBean implements Serializable {
         BarChartModel model = new BarChartModel();
  
         ChartSeries complains = new ChartSeries();
+        ChartSeries suggestions = new ChartSeries();
         complains.setLabel("Complains");
         for(Object[] obj:complaintFacade.getComplaintsStatsByRole(currentUserDTO.getId(), currentUserDepartmentRole)){
-            String s = ((Integer)obj[1]+":"+(Integer)obj[2]).toString();
+            String s = (Integer)obj[1]+":"+(Integer)obj[2];
             complains.set(s, (Long)obj[0]);
+            suggestions.set(s, 0);
         }
-        ChartSeries suggestions = new ChartSeries();
+     
         suggestions.setLabel("Suggestions");
         for(Object[] obj:suggestionFacade.getSuggestionsStatsByRole(currentUserDTO.getId(), currentUserDepartmentRole)){
-            String s = ((Integer)obj[1]+":"+(Integer)obj[2]).toString();
+            String s = (Integer)obj[1]+":"+(Integer)obj[2];
             suggestions.set(s, (Long)obj[0]);
+            if(complains.getData().get(s)==null){
+                 complains.set(s, 0);
+            }
         }
         if(complains.getData().isEmpty()){
                complains.set("No Data", 0);

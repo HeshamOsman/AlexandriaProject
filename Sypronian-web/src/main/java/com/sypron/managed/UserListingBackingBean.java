@@ -23,8 +23,10 @@ import org.primefaces.event.SelectEvent;
  *
  * @author hisham
  */
-@ManagedBean()
-@ViewScoped
+//@ManagedBean()
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class UserListingBackingBean implements Serializable{
 
     /**

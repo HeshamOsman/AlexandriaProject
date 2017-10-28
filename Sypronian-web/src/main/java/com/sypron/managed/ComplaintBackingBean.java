@@ -13,6 +13,7 @@ import com.sypron.facade.StatusFacade;
 import com.sypron.util.PasswordEncoder;
 import com.sypron.util.SessionUtils;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import javax.inject.Named;
@@ -28,9 +29,11 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author hisham
  */
-@ManagedBean
-@ViewScoped
-public class ComplaintBackingBean {
+//@ManagedBean
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+public class ComplaintBackingBean implements Serializable {
 
     //mention past complaint
     @Inject

@@ -14,6 +14,7 @@ import com.sypron.facade.DepartmentRoleFacade;
 import com.sypron.facade.UserFacade;
 import com.sypron.util.SessionUtils;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -28,9 +29,12 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author hisham
  */
-@ManagedBean
-@ViewScoped
-public class ViewUserBackingBean {
+//@ManagedBean
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+public class ViewUserBackingBean implements Serializable {
+
     @Inject
     private UserFacade userFacade;
     private Integer userIdParam;
@@ -39,7 +43,7 @@ public class ViewUserBackingBean {
     private String userRoleName;
     private boolean ownerEdit;
     private boolean adminEdit;
-    
+
     private List<Department> departments;
     private List<Role> departmentRoles;
 
@@ -48,13 +52,15 @@ public class ViewUserBackingBean {
     DepartmentRoleFacade departmentRoleFacade;
     @Inject
     DepartmentFacade departmentFacade;
+
     /**
      * Creates a new instance of ViewUser
      */
     public ViewUserBackingBean() {
     }
+
     @PostConstruct
-    public void onInit(){
+    public void onInit() {
         currentLogeddUser = SessionUtils.getLoggedUser();
     }
 
@@ -67,30 +73,48 @@ public class ViewUserBackingBean {
     }
 
     public User getCurrentUser() {
-        if(currentUser == null){
-           if(userIdParam == null){
-               FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
-        String contextPath = origRequest.getContextPath();
-        try {
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect(contextPath + "/notAuthorized.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-           } 
-           currentUser= userFacade.find(userIdParam);
-           if(currentUser == null){
-                      FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
-        String contextPath = origRequest.getContextPath();
-        try {
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect(contextPath + "/notAuthorized.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-           }
+        if (currentUser == null) {
+            if (userIdParam == null) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+                String contextPath = origRequest.getContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext()
+                            .redirect(contextPath + "/notAuthorized.xhtml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            currentUser = userFacade.find(userIdParam);
+            if (currentUser == null) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+                String contextPath = origRequest.getContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext()
+                            .redirect(contextPath + "/notAuthorized.xhtml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } 
+            if(currentUser.getId()==currentLogeddUser.getId()){
+                ownerEdit = true;
+            }
+            if(currentLogeddUser.getPermissionsMap().get("user", "add", "non")!=null){
+                adminEdit = true;
+            }
+            
+            if(!(ownerEdit||adminEdit)){
+                   FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+                String contextPath = origRequest.getContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext()
+                            .redirect(contextPath + "/notAuthorized.xhtml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return currentUser;
     }
@@ -98,12 +122,12 @@ public class ViewUserBackingBean {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
-    
-      public List<Department> getDepartments() {
-        if(departments == null){
+
+    public List<Department> getDepartments() {
+        if (departments == null) {
             departments = departmentFacade.findAll();
         }
-        
+
         return departments;
     }
 
@@ -112,7 +136,7 @@ public class ViewUserBackingBean {
     }
 
     public List<Role> getDepartmentRoles() {
-        if(departmentRoles==null){
+        if (departmentRoles == null) {
             departmentRoles = departmentRoleFacade.findAllRolesForDepartment(getUserDepartmentName());
         }
         return departmentRoles;
@@ -123,7 +147,7 @@ public class ViewUserBackingBean {
     }
 
     public String getUserRoleName() {
-        if(userRoleName==null){
+        if (userRoleName == null) {
             userRoleName = getCurrentUser().getDepartmentRole().getRole().getName();
         }
         return userRoleName;
@@ -134,8 +158,8 @@ public class ViewUserBackingBean {
     }
 
     public String getUserDepartmentName() {
-        
-        if(userDepartmentName==null){
+
+        if (userDepartmentName == null) {
             userDepartmentName = getCurrentUser().getDepartmentRole().getDepartment().getName();
         }
         return userDepartmentName;
@@ -146,7 +170,7 @@ public class ViewUserBackingBean {
     }
 
     public boolean isOwnerEdit() {
-        if(currentLogeddUser.getId().equals(userIdParam)){
+        if (currentLogeddUser.getId().equals(userIdParam)) {
             ownerEdit = true;
         }
         return ownerEdit;
@@ -157,7 +181,7 @@ public class ViewUserBackingBean {
     }
 
     public boolean isAdminEdit() {
-        if(!currentLogeddUser.getId().equals(userIdParam)){
+        if (!currentLogeddUser.getId().equals(userIdParam)) {
             adminEdit = true;
         }
         return adminEdit;
@@ -166,13 +190,9 @@ public class ViewUserBackingBean {
     public void setAdminEdit(boolean adminEdit) {
         this.adminEdit = adminEdit;
     }
-    
-    
 
     public void onChangeDepartment() {
         departmentRoles = departmentRoleFacade.findAllRolesForDepartment(userDepartmentName);
     }
-    
-    
-    
+
 }

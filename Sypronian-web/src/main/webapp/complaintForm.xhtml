@@ -7,9 +7,10 @@
     <ui:define name="content">
         <f:view>
 
-            <h:form>
+            <h:form >
                 <p:messages id="msgs" closable="true" />
-                <p:panelGrid columns="2" class="login-container">
+                <p:outputLabel style="text-align: center">New Complaint</p:outputLabel>
+                <p:panelGrid columns="2" >
                     <p:outputLabel value="Subject" />
                     <p:inputText id="subject" value="#{complaintBackingBean.newComplaint.subject}"
                                  required="true" requiredMessage="Subject is required"></p:inputText>

@@ -28,8 +28,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author hisham
  */
-@ManagedBean
-@SessionScoped
+//@ManagedBean
+@Named
+@javax.enterprise.context.SessionScoped
 public class LoginBackingBean implements Serializable{
 
     private static final long serialVersionUID = 1094801825228386363L;

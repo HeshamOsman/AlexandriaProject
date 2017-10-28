@@ -6,26 +6,51 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         <f:view>
-            <f:metadata>
-                <f:viewParam id="suggestion_id" name="suggestionId" value="#{viewSuggestion.suggestionIdParam}"
-                             required="true" requiredMessage="Please use a link from within the system"/>
-            </f:metadata>
+            <h:form id="sr">
+                <f:metadata>
+                    <f:viewParam id="suggestion_id" name="suggestionId" value="#{viewSuggestion.suggestionIdParam}"
+                                 required="true" requiredMessage="Please use a link from within the system"/>
+                </f:metadata>
 
-            <p:panelGrid columns="2" class="login-container">
-                <p:outputLabel  value="Suggestion Identifier" />
-                <p:outputLabel  value="#{viewSuggestion.currentSuggestion.suggestionIdentifier}" />
-                <p:outputLabel  value="Suggestion By" />
-                <p:outputLabel  value="#{(viewSuggestion.currentSuggestion.anonymous)?'Anonymous': viewSuggestion.currentSuggestion.user.email}" />
-                <p:outputLabel  value="Subject" />
-                <p:outputLabel  value="#{viewSuggestion.currentSuggestion.subject}" />
-                <p:outputLabel  value="Suggestion Definition" />
-                <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionDefinition}" />
-                <p:outputLabel  value="Suggestion Impact" />
-                <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionImpact}" />
+                <p:panelGrid columns="2" >
 
+                    <p:panel>
+                        <p:outputLabel  value="Suggestion Identifier : " />
+                        <p:outputLabel  value="#{viewSuggestion.currentSuggestion.suggestionIdentifier}" />
+                    </p:panel>
+                    <p:panel>
+                        <p:outputLabel  value="Suggestion Status : " />
 
-            </p:panelGrid>  
-            <h:form>
+                        <p:selectOneMenu disabled="#{!viewSuggestion.statusChangeEnabled}" id="status" value="#{viewSuggestion.statusString}"
+                                         >
+                            <p:ajax   listener="#{viewSuggestion.onChangeStatus()}" update="addActionBtn"  />
+
+                            <f:selectItems value="#{viewSuggestion.statusList}" var="selected1" itemLabel="#{selected1.name}" itemValue="#{selected1.name}"  >
+
+                            </f:selectItems>
+                        </p:selectOneMenu>
+
+                    </p:panel>
+                    <p:panel>
+                        <p:outputLabel  value="Suggestion By : " />
+                        <p:outputLabel  value="#{(viewSuggestion.currentSuggestion.anonymous)?'Anonymous': viewSuggestion.currentSuggestion.user.email}" />
+                    </p:panel>
+                    <p:panel>
+                        <p:outputLabel  value="Subject : " />
+                        <p:outputLabel  value="#{viewSuggestion.currentSuggestion.subject}" />
+                    </p:panel>
+                    <p:panel>
+                        <p:outputLabel  value="Suggestion Definition : " />
+                        <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionDefinition}" />
+                    </p:panel>
+                    <p:panel>
+                        <p:outputLabel  value="Suggestion Impact : " />
+                        <p:inputTextarea disabled="true"  value="#{viewSuggestion.currentSuggestion.suggestionImpact}" />
+                    </p:panel>
+                    <h:commandButton class="button" value="ExportToPDF" title="ExportToPDF"  action="#{viewSuggestion.pDF}"/>
+
+                </p:panelGrid>  
+
                 <p:dataTable id="suggestionActions"  value="#{viewSuggestion.suggestionActions}" var="oneInstance" >
                     <p:column id="actiondesc" filterBy="#{oneInstance.description}"  sortBy="#{oneInstance.description}" >  
 
@@ -46,9 +71,32 @@
 
                     </p:column> 
                 </p:dataTable> 
-                <p:inputText rendered="#{viewSuggestion.renderAddAction}" value="#{viewSuggestion.newSuggestionAction.description}"/>
-              
-                <p:commandButton action="#{viewSuggestion.addAction()}" rendered="#{viewSuggestion.renderAddAction}" value="add action" update="suggestionActions"/>
+             <p:commandButton id="addActionBtn" class="button" disabled="#{!viewSuggestion.renderAddAction}" immediate="true"   onclick="PF('dlg').show();" value="add Action"  >
+                                    
+                </p:commandButton>
+
+               
+            </h:form>
+
+            <h:form id="addActionForm">
+                <p:dialog header="Add Action" widgetVar="dlg" resizable="true" closable="true" showEffect="explode" hideEffect="explode">  
+
+                    <p:panelGrid columns="1"  > 
+                        <p:outputLabel value="action Dec" />
+                        <p:inputTextarea  value="#{viewSuggestion.newSuggestionAction.description}"/>
+                    </p:panelGrid>  
+                    <p:commandButton id="saveAction" class="button" action="#{viewSuggestion.addAction()}"  value="add action" update="sr:suggestionActions"/>
+                </p:dialog> 
+            </h:form>
+            <h:form id="viewActionForm">
+                <p:dialog header="View Action" widgetVar="viewDlg" resizable="true" closable="true" showEffect="explode" hideEffect="explode">  
+
+                    <p:panelGrid columns="2"  > 
+                        <p:outputLabel value="action Dec" />
+                        <p:inputTextarea  value="#{viewComplaintBackingBean.newComplaintAction.description}"/>
+                    </p:panelGrid>  
+
+                </p:dialog> 
             </h:form>
         </f:view>
     </ui:define>

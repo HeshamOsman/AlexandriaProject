@@ -14,6 +14,7 @@ import com.sypron.facade.StatusFacade;
 import com.sypron.facade.SuggestionFacade;
 import com.sypron.util.SessionUtils;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -27,9 +28,11 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author hisham
  */
-@ManagedBean
-@ViewScoped
-public class SuggestionBackingBean {
+//@ManagedBean
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
+public class SuggestionBackingBean implements Serializable{
 
     @Inject
     private SuggestionFacade suggestionFacade;

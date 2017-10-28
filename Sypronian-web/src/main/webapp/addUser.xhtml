@@ -8,7 +8,7 @@
         <f:view>
 
             <h:form>
-                <p:messages id="msgs" />
+                <p:messages id="msgs" closable="true" />
                 <p:panel>
                     <p:panelGrid columns="2" class="login-container">
 
@@ -26,7 +26,7 @@
                                      required="true" requiredMessage="Last Name is required"></p:inputText>
 
                         <p:outputLabel value="Password *" />
-                        <p:password id="password" value="#{addUserBackingBean.password}" match="repassword"
+                        <p:password id="password" value="#{addUserBackingBean.password}" 
                                     required="true" requiredMessage="Password is required" ></p:password>
                         <p:outputLabel value="Retype Password *" />
                         <p:password id="repassword" value="#{addUserBackingBean.retypedPassword}"

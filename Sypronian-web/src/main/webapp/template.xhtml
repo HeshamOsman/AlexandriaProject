@@ -7,6 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>  
         <link href="resources/styles/mainStyles.css" rel="stylesheet" type="text/css" />
+       
 <!--        <style>
             .ui-menubar,.ui-menu-child,.ui-menu {
 /*    background: #004e8e !important;*/
@@ -23,33 +24,31 @@ background: white !important;
             </style>-->
     
     </h:head>
-    <body >
+    <h:body >
 
 
         <p:layout  fullPage="true" >
-            <p:layoutUnit id="upUnit" position="north" closable="true"  >                                        
+            <p:layoutUnit id="upUnit" position="north" closable="true" class="sideM"  >                                        
                 <h:form>  
-                    <p:panelGrid columns="2" style="width: 100%">
+                    <p:panelGrid columns="4" style="width: 100%" class="northPanalGrid">
                         <p:graphicImage  value="resources/images/sypron_logo.png"  />
-                    <p:menubar >
-                        
-                        <p:menuitem style=" float:right;" value="Home"  outcome="homePage"  />
-                        <p:menuitem style=" float:right;" value="Profile"  outcome="viewUser"  >
-                            <f:param name="userId" value="#{menuBackingBean.currentUser.id}" />
-                        </p:menuitem>
 
+                        <p:button class="button" outcome="homePage" value="Home" icon="ui-icon-home"/>
+                        <p:button class="button" outcome="viewUser" value="Profile" icon="ui-icon-person">
+                             <f:param name="userId" value="#{menuBackingBean.currentUser.id}" />
+                        </p:button>
+                        <p:commandButton class="button" action="#{loginBackingBean.logout()}" value="Logout" icon="ui-icon-extlink"
+                                         ></p:commandButton>
 
-                        <p:menuitem style=" float:right;" value="Logout" icon="ui-icon-extlink" action="#{loginBackingBean.logout()}"  />
-
-                    </p:menubar>
                     </p:panelGrid>
                     
                 </h:form>          
             </p:layoutUnit>
-            <p:layoutUnit id="westUnit" position="west" size="230" closable="true" resizable="true"  >                                        
+            <p:layoutUnit id="westUnit" position="west" size="230" closable="true" resizable="true" class="sideM"  > 
+           
                 <h:form>  
 
-                    <p:panelMenu style="width:220px;">
+                    <p:panelMenu >
                         <p:submenu label="Complaint" rendered="#{menuBackingBean.renderComplaint}" >
                             <p:menuitem rendered="#{menuBackingBean.renderNewComplaint}" value="New Complaint" outcome="complaintForm" />
                             <p:menuitem rendered="#{menuBackingBean.renderListMyComplaint}" value="My Complaints" outcome="complaintsListing"  >
@@ -82,25 +81,26 @@ background: white !important;
 
 
                     </p:panelMenu>
-                </h:form>          
+                </h:form>
+                
             </p:layoutUnit>
             <p:layoutUnit position="center" id="inner-content">
 
                 <ui:insert name="content">Default content</ui:insert>                    
             </p:layoutUnit>
-            <p:layoutUnit position="south" id="footer" closable="true" resizable="true" >
-                <p:panel>
-                <p:outputLabel >All rights reserved 2017,</p:outputLabel>
-                <p:link value="sypron.com" href="http://www.sypron.com/" target="_blank">
+            <p:layoutUnit position="south" id="footer" class="sideM"  >
+             
+                <p:outputLabel style="color: black">All rights reserved 2017,</p:outputLabel>
+                <p:link style="color: blue" value="sypron.com" href="http://www.sypron.com/" target="_blank">
                     
                 </p:link>  
-</p:panel>                
+            
             </p:layoutUnit>
         </p:layout>               
 
 
 
-    </body>
+    </h:body>
 
 </html>
 

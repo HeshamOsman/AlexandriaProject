@@ -23,8 +23,10 @@ import org.apache.commons.collections4.map.MultiKeyMap;
  *
  * @author hisham
  */
-@ManagedBean()
-@ViewScoped
+//@ManagedBean()
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class MenuBackingBean implements Serializable {
 //
 

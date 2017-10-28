@@ -26,13 +26,16 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
+import javax.inject.Named;
 
 /**
  *
  * @author hisham
  */
-@ManagedBean()
-@ViewScoped
+//@ManagedBean()
+//@ViewScoped
+@Named
+@javax.faces.view.ViewScoped
 public class AddUserBackingBean implements Serializable {
 
     /**

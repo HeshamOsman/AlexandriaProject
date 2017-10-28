@@ -16,13 +16,13 @@
                 <p:messages id="msgs" closable="true"/>
                 <p:panelGrid columns="2" class="login-container">
                     <p:outputLabel  value="First Name"  /> 
-                    <p:inputText disabled="true"  value="#{viewUserBackingBean.currentUser.firstName}"  />
+                    <p:inputText disabled="#{!viewUserBackingBean.ownerEdit}"  value="#{viewUserBackingBean.currentUser.firstName}"  />
                     <p:outputLabel value="Last Name"/>
-                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.lastName}"/>
+                    <p:inputText disabled="#{!viewUserBackingBean.ownerEdit}" value="#{viewUserBackingBean.currentUser.lastName}"/>
                     <p:outputLabel value="Email"/>
                     <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.email}"/>
                     <p:outputLabel value="Department"/>
-                    <p:selectOneMenu id="department" disabled="true" value="#{viewUserBackingBean.userDepartmentName}"
+                    <p:selectOneMenu id="department" disabled="#{!viewUserBackingBean.adminEdit}" value="#{viewUserBackingBean.userDepartmentName}"
                                      required="true" requiredMessage="Department is required" >
                         <p:ajax listener="#{viewUserBackingBean.onChangeDepartment()}" update="role" />
                         <f:selectItem itemLabel="Select Department" itemValue="" noSelectionOption="true" />
@@ -33,7 +33,7 @@
 
                     <p:outputLabel value="Role"/>
 
-                    <p:selectOneMenu  id="role" disabled="true" value="#{viewUserBackingBean.userRoleName}"
+                    <p:selectOneMenu  id="role" disabled="#{!viewUserBackingBean.adminEdit}" value="#{viewUserBackingBean.userRoleName}"
                                     required="true" requiredMessage="Role is required" >
                         <p:ajax />
                         <f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
@@ -45,10 +45,10 @@
                     <p:outputLabel value="Join Date"/>
                     <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.createDate}"/>
                     <p:outputLabel value="Tel"/>
-                    <p:inputText disabled="true" value="#{viewUserBackingBean.currentUser.tel}"/>
+                    <p:inputText disabled="#{!viewUserBackingBean.ownerEdit}" value="#{viewUserBackingBean.currentUser.tel}"/>
 
                     <p:outputLabel value="Active"/>
-                    <p:selectOneMenu  id="active" disabled="true" value="#{viewUserBackingBean.currentUser.active}"
+                    <p:selectOneMenu  id="active" disabled="#{!viewUserBackingBean.adminEdit}" value="#{viewUserBackingBean.currentUser.active}"
                                      >
                         <p:ajax />
                         <f:selectItem itemLabel="Select Role" itemValue="" noSelectionOption="true" />
